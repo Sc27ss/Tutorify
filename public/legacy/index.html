@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TutorAula | Tutorías académicas escolares en línea</title>
+  <meta name="description" content="Encuentra tutores verificados de cálculo, física, química e ICFES. Agenda, paga seguro y estudia en videollamada." />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <!-- ================= HEADER / NAVBAR ================= -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="#inicio" class="logo" aria-label="TutorAula inicio">
+        <span class="logo-mark">TA</span>
+        <span class="logo-text">Tutor<strong>Aula</strong></span>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#inicio">Inicio</a>
+        <a href="#tutores">Tutores</a>
+        <a href="#proceso">Cómo funciona</a>
+        <a href="#planes">Planes</a>
+        <a href="#testimonios">Reseñas</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="btn btn-ghost" data-open-auth="login">Iniciar sesión</button>
+        <button class="btn btn-primary" data-open-auth="registro">Registrarse</button>
+        <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="inicio">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <span class="badge">+1.200 estudiantes acompañados en Colombia</span>
+          <h1>Refuerza tus materias con <span class="grad">tutores verificados</span></h1>
+          <p>Clases particulares en vivo de Cálculo, Física, Química, Lectura Crítica y más. Agenda en minutos, paga seguro y entra a tu sala virtual.</p>
+
+          <form class="quick-search" id="quickSearch">
+            <div class="field">
+              <label for="qsMateria">Materia</label>
+              <select id="qsMateria"><option value="">Todas las materias</option></select>
+            </div>
+            <div class="field">
+              <label for="qsNivel">Nivel</label>
+              <select id="qsNivel">
+                <option value="">Todos los niveles</option>
+                <option value="primaria">Primaria</option>
+                <option value="bachillerato">Bachillerato</option>
+                <option value="icfes">Preparación ICFES</option>
+                <option value="universidad">Universidad</option>
+              </select>
+            </div>
+            <button class="btn btn-primary btn-lg" type="submit">Buscar tutor</button>
+          </form>
+
+          <ul class="hero-stats">
+            <li><strong>4.8/5</strong><span>Calificación media</span></li>
+            <li><strong>32</strong><span>Materias activas</span></li>
+            <li><strong>98%</strong><span>Sesiones cumplidas</span></li>
+          </ul>
+        </div>
+
+        <div class="hero-card reveal">
+          <div class="card-live">
+            <span class="pulse"></span> Sala virtual en vivo
+          </div>
+          <div class="card-tutor">
+            <div class="avatar">LG</div>
+            <div>
+              <h4>Laura Gómez</h4>
+              <p>Cálculo Integral · 4.9 ★</p>
+            </div>
+          </div>
+          <div class="card-board">
+            <p>∫ (3x² + 2x) dx = x³ + x² + C</p>
+            <div class="bar"></div>
+            <div class="bar short"></div>
+          </div>
+          <div class="card-foot">
+            <span>Hoy · 4:00 p.m.</span>
+            <span class="chip">Confirmada</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= BÚSQUEDA Y FILTRADO (RF-02) ================= -->
+    <section class="section" id="tutores">
+      <div class="container">
+        <header class="section-head reveal">
+          <h2>Encuentra tu tutor ideal</h2>
+          <p>Filtra en tiempo real por materia, nivel, precio por hora y calificación.</p>
+        </header>
+
+        <div class="layout-filters">
+          <aside class="filters reveal" aria-label="Filtros de búsqueda">
+            <div class="filter-block">
+              <label for="fBuscar">Buscar</label>
+              <input type="search" id="fBuscar" placeholder="Nombre o palabra clave" />
+            </div>
+            <div class="filter-block">
+              <label for="fMateria">Materia</label>
+              <select id="fMateria"><option value="">Todas</option></select>
+            </div>
+            <div class="filter-block">
+              <label for="fNivel">Nivel educativo</label>
+              <select id="fNivel">
+                <option value="">Todos</option>
+                <option value="primaria">Primaria</option>
+                <option value="bachillerato">Bachillerato</option>
+                <option value="icfes">Preparación ICFES</option>
+                <option value="universidad">Universidad</option>
+              </select>
+            </div>
+            <div class="filter-block">
+              <label for="fPrecio">Precio máximo por hora: <span id="fPrecioVal">$60.000</span></label>
+              <input type="range" id="fPrecio" min="20000" max="60000" step="1000" value="60000" />
+            </div>
+            <div class="filter-block">
+              <label for="fCalificacion">Calificación mínima: <span id="fCalificacionVal">0.0 ★</span></label>
+              <input type="range" id="fCalificacion" min="0" max="5" step="0.5" value="0" />
+            </div>
+            <button class="btn btn-ghost btn-block" id="btnLimpiar" type="button">Limpiar filtros</button>
+          </aside>
+
+          <div>
+            <p class="results-count" id="resultsCount">Cargando tutores…</p>
+            <div class="tutor-grid" id="tutorGrid"></div>
+            <p class="empty" id="emptyState" hidden>No encontramos tutores con esos criterios. Ajusta los filtros.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PROCESO ================= -->
+    <section class="section section-alt" id="proceso">
+      <div class="container">
+        <header class="section-head reveal">
+          <h2>Busca → Agenda → Aprende</h2>
+          <p>Tres pasos para pasar de la duda al dominio de la materia.</p>
+        </header>
+        <div class="steps">
+          <article class="step reveal">
+            <span class="step-num">1</span>
+            <h3>Busca</h3>
+            <p>Filtra tutores por materia, nivel, precio y reseñas reales de otros estudiantes.</p>
+          </article>
+          <article class="step reveal">
+            <span class="step-num">2</span>
+            <h3>Agenda</h3>
+            <p>Elige un horario disponible en la agenda del tutor y confirma con pago seguro.</p>
+          </article>
+          <article class="step reveal">
+            <span class="step-num">3</span>
+            <h3>Aprende</h3>
+            <p>Recibe tu enlace de sala virtual, toma la clase y califica al terminar.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PLANES ================= -->
+    <section class="section" id="planes">
+      <div class="container">
+        <header class="section-head reveal">
+          <h2>Planes y tarifas</h2>
+          <p>Paga por clase o ahorra con paquetes de horas.</p>
+        </header>
+        <div class="plans">
+          <article class="plan reveal">
+            <h3>Clase Individual</h3>
+            <p class="price">$45.000<span>/hora</span></p>
+            <ul>
+              <li>1 hora de tutoría en vivo</li>
+              <li>Sala virtual incluida</li>
+              <li>Material de apoyo digital</li>
+              <li>Reprogramación con 12 h</li>
+            </ul>
+            <button class="btn btn-ghost btn-block" data-plan="Clase Individual">Elegir plan</button>
+          </article>
+          <article class="plan plan-featured reveal">
+            <span class="plan-tag">Más elegido</span>
+            <h3>Pack Estudiante</h3>
+            <p class="price">$380.000<span>/10 horas</span></p>
+            <ul>
+              <li>10 horas con el mismo tutor</li>
+              <li>Ahorro del 15%</li>
+              <li>Plan de estudio personalizado</li>
+              <li>Informe mensual de avance</li>
+            </ul>
+            <button class="btn btn-primary btn-block" data-plan="Pack Estudiante">Elegir plan</button>
+          </article>
+          <article class="plan reveal">
+            <h3>Plan Exámenes / ICFES</h3>
+            <p class="price">$690.000<span>/20 horas</span></p>
+            <ul>
+              <li>20 horas intensivas</li>
+              <li>Simulacros calificados</li>
+              <li>Tutores especializados Saber 11</li>
+              <li>Seguimiento semanal a acudientes</li>
+            </ul>
+            <button class="btn btn-ghost btn-block" data-plan="Plan Exámenes / ICFES">Elegir plan</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TESTIMONIOS (RF-06) ================= -->
+    <section class="section section-alt" id="testimonios">
+      <div class="container">
+        <header class="section-head reveal">
+          <h2>Lo que dicen los estudiantes</h2>
+          <p>Calificaciones verificadas al finalizar cada sesión.</p>
+        </header>
+        <div class="testimonials" id="testimonials"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <a href="#inicio" class="logo logo-light">
+          <span class="logo-mark">TA</span>
+          <span class="logo-text">Tutor<strong>Aula</strong></span>
+        </a>
+        <p>Plataforma colombiana de tutorías académicas escolares en línea.</p>
+      </div>
+      <div>
+        <h4>Plataforma</h4>
+        <a href="#tutores">Buscar tutores</a>
+        <a href="#planes">Planes</a>
+        <a href="#proceso">Cómo funciona</a>
+      </div>
+      <div>
+        <h4>Institucional</h4>
+        <a href="#inicio">Sobre nosotros</a>
+        <a href="#inicio">Términos y condiciones</a>
+        <a href="#inicio">Política de privacidad</a>
+      </div>
+      <div>
+        <h4>Síguenos</h4>
+        <a href="#inicio">Instagram</a>
+        <a href="#inicio">YouTube</a>
+        <a href="#inicio">LinkedIn</a>
+      </div>
+    </div>
+    <p class="copyright">© 2026 TutorAula. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- ================= MODAL AUTENTICACIÓN (RF-01) ================= -->
+  <div class="modal" id="authModal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+      <button class="modal-close" data-close aria-label="Cerrar">✕</button>
+      <h3 id="authTitle">Iniciar sesión</h3>
+      <div class="tabs">
+        <button class="tab is-active" data-tab="login" type="button">Ingresar</button>
+        <button class="tab" data-tab="registro" type="button">Crear cuenta</button>
+      </div>
+      <form id="authForm" novalidate>
+        <div class="field" id="fieldNombre" hidden>
+          <label for="auNombre">Nombre completo</label>
+          <input type="text" id="auNombre" autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="auEmail">Correo electrónico</label>
+          <input type="email" id="auEmail" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <label for="auPassword">Contraseña</label>
+          <input type="password" id="auPassword" autocomplete="current-password" required />
+        </div>
+        <div class="field" id="fieldRol" hidden>
+          <label for="auRol">Quiero registrarme como</label>
+          <select id="auRol">
+            <option value="estudiante">Estudiante</option>
+            <option value="tutor">Tutor</option>
+          </select>
+        </div>
+        <p class="form-error" id="authError" hidden></p>
+        <button class="btn btn-primary btn-block" type="submit">Continuar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL AGENDA + PAGO + SALA (RF-03/04/05) ================= -->
+  <div class="modal" id="bookModal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-box modal-wide" role="dialog" aria-modal="true" aria-labelledby="bookTitle">
+      <button class="modal-close" data-close aria-label="Cerrar">✕</button>
+      <h3 id="bookTitle">Agendar tutoría</h3>
+      <p class="modal-sub" id="bookTutor"></p>
+
+      <ol class="stepper">
+        <li class="is-active" data-step="1">Horario</li>
+        <li data-step="2">Pago</li>
+        <li data-step="3">Sala virtual</li>
+      </ol>
+
+      <!-- Paso 1: agenda -->
+      <div class="step-panel" data-panel="1">
+        <label class="field-label">Selecciona un horario disponible</label>
+        <div class="slots" id="slots"></div>
+        <button class="btn btn-primary btn-block" id="btnIrPago" type="button" disabled>Continuar al pago</button>
+      </div>
+
+      <!-- Paso 2: pago simulado -->
+      <div class="step-panel" data-panel="2" hidden>
+        <div class="summary" id="paySummary"></div>
+        <form id="payForm" novalidate>
+          <div class="field">
+            <label for="payMetodo">Método de pago</label>
+            <select id="payMetodo">
+              <option value="tarjeta">Tarjeta débito / crédito</option>
+              <option value="pse">PSE</option>
+              <option value="nequi">Nequi</option>
+              <option value="daviplata">Daviplata</option>
+            </select>
+          </div>
+          <div class="field" id="fieldTarjeta">
+            <label for="payTarjeta">Número de tarjeta</label>
+            <input type="text" id="payTarjeta" inputmode="numeric" maxlength="19" placeholder="4242 4242 4242 4242" />
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="payVence">Vence</label>
+              <input type="text" id="payVence" maxlength="5" placeholder="MM/AA" />
+            </div>
+            <div class="field">
+              <label for="payCvv">CVV</label>
+              <input type="password" id="payCvv" maxlength="4" placeholder="123" />
+            </div>
+          </div>
+          <p class="form-error" id="payError" hidden></p>
+          <button class="btn btn-primary btn-block" type="submit" id="btnPagar">Pagar y confirmar</button>
+          <p class="secure-note">Pago cifrado simulado · No se realizan cobros reales</p>
+        </form>
+      </div>
+
+      <!-- Paso 3: sala virtual -->
+      <div class="step-panel" data-panel="3" hidden>
+        <div class="success">
+          <div class="success-icon">✓</div>
+          <h4>¡Tutoría confirmada!</h4>
+          <p id="payRef"></p>
+        </div>
+        <div class="room-box">
+          <span>Tu sala virtual</span>
+          <code id="roomLink"></code>
+          <div class="room-actions">
+            <button class="btn btn-ghost" id="btnCopiar" type="button">Copiar enlace</button>
+            <button class="btn btn-primary" id="btnEntrar" type="button">Entrar a la clase</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" hidden></div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

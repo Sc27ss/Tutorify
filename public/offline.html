@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f6f5f4">
+<title>Sin conexión | Tutorify</title>
+<style>
+  body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f6f5f4;color:rgba(0,0,0,.95);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+  main{max-width:420px;text-align:center}
+  .card{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:12px;padding:32px}
+  .mark{display:inline-grid;place-items:center;width:56px;height:56px;border-radius:12px;background:#0075de;color:#fff;font-weight:700;font-size:20px}
+  h1{font-size:28px;letter-spacing:-.03em;margin:20px 0 8px}
+  p{color:#615d59;line-height:1.5;margin:0 0 24px}
+  @media (prefers-color-scheme: dark){body{background:#191918;color:rgba(255,255,255,.92)}.card{background:#232322;border-color:rgba(255,255,255,.1)}p{color:#a8a39e}}
+  button:focus-visible{outline:3px solid #0075de;outline-offset:2px}
+  button{background:#0075de;color:#fff;border:0;border-radius:8px;padding:8px 18px;font:500 14px inherit;cursor:pointer}
+</style>
+</head>
+<body>
+<main><div class="card">
+  <span class="mark" aria-hidden="true">Tf</span>
+  <h1 id="t">Estás sin conexión</h1>
+  <p id="d">Tutorify necesita internet para cargar tus tutorías y tareas. Revisa tu conexión e inténtalo de nuevo.</p>
+  <button id="b" onclick="location.reload()">Reintentar</button>
+</div></main>
+<script>
+(function(){try{
+  var g=JSON.parse(localStorage.getItem('tutorify-preferencias')||'null');
+  var en=g&&g.idioma?g.idioma==='en':(navigator.language||'es').toLowerCase().indexOf('en')===0;
+  if(en){
+    document.documentElement.lang='en';
+    document.title='Offline | Tutorify';
+    document.getElementById('t').textContent="You're offline";
+    document.getElementById('d').textContent='Tutorify needs internet to load your tutoring sessions and homework. Check your connection and try again.';
+    document.getElementById('b').textContent='Try again';
+  }
+}catch(e){}})();
+</script>
+</body>
+</html>

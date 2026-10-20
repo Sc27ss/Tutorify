@@ -1,0 +1,505 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Tutorify design system — lenguaje visual "cuaderno de papel" (referencia: Notion).
+ * Tipografía: Inter (UI y títulos con tracking negativo) · Source Serif 4 (voz editorial, uso puntual).
+ * Reglas: lienzo cálido #f6f5f4, tarjetas blancas con borde de 1px (sin sombras), radio 12px en tarjetas y 8px
+ * en botones, azul #0075de como ÚNICA acción rellena, acentos (amarillo, coral, cielo, medianoche) como fondos
+ * de tarjetas. Nada de degradados. Movimiento: 200ms ease; resortes solo en marcas decorativas.
+ */
+
+@theme inline {
+  --font-display: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-ui: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 12px;
+  --radius-3xl: 12px;
+  --radius-4xl: 12px;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+
+  /* Acentos (nombres conservados para no romper el marcado existente) */
+  --color-mint: var(--mint);
+  --color-mint-deep: var(--mint-deep);
+  --color-sun: var(--sun);
+  --color-sun-soft: var(--sun-soft);
+  --color-amber-ocre: var(--amber-ocre);
+  --color-royal: var(--royal);
+  --color-royal-soft: var(--royal-soft);
+  --color-grape: var(--grape);
+  --color-grape-deep: var(--grape-deep);
+  --color-ink: var(--ink);
+  --color-peach: var(--peach);
+  --color-midnight: var(--midnight);
+  --color-sky-tint: var(--sky-tint);
+
+  --color-chart-1: var(--mint);
+  --color-chart-2: var(--sun);
+  --color-chart-3: var(--royal);
+  --color-chart-4: var(--grape);
+  --color-chart-5: var(--amber-ocre);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 8px;
+
+  /* Acentos Notion */
+  --mint: #62aef0;          /* Sky Wash */
+  --mint-deep: #0075de;     /* Notion Blue (texto/enlaces sobre claro) */
+  --sun: #ffb110;           /* Marigold */
+  --sun-soft: #f6d5b8;      /* Peach de las píldoras del héroe */
+  --amber-ocre: #9a6200;    /* Saffron oscurecido para texto legible */
+  --royal: #097fe8;         /* Signal Blue */
+  --royal-soft: #62aef0;
+  --grape: #f64932;         /* Coral */
+  --grape-deep: #b8301c;
+  --ink: #000000;
+  --peach: #f6d5b8;
+  --midnight: #02093a;
+  --sky-tint: #e6f3fe;
+
+  /* Base */
+  --background: #f6f5f4;                 /* Paper Warmth */
+  --foreground: rgba(0, 0, 0, 0.95);
+  --card: #ffffff;
+  --card-foreground: rgba(0, 0, 0, 0.95);
+  --popover: #ffffff;
+  --popover-foreground: rgba(0, 0, 0, 0.95);
+  --primary: #0075de;
+  --primary-foreground: #ffffff;
+  --secondary: #efeeec;
+  --secondary-foreground: rgba(0, 0, 0, 0.8);
+  --muted: #efeeec;
+  --muted-foreground: #615d59;           /* Graphite */
+  --accent: #e6f3fe;
+  --accent-foreground: #0075de;
+  --destructive: #e32d14;
+  --destructive-foreground: #ffffff;
+  --border: rgba(0, 0, 0, 0.08);
+  --input: rgba(0, 0, 0, 0.14);
+  --ring: #0075de;
+
+  --sidebar: #fbfaf9;
+  --sidebar-foreground: rgba(0, 0, 0, 0.9);
+  --sidebar-primary: #0075de;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #efeeec;
+  --sidebar-accent-foreground: rgba(0, 0, 0, 0.95);
+  --sidebar-border: rgba(0, 0, 0, 0.08);
+  --sidebar-ring: #0075de;
+
+  /* Sin degradados: "brand" es el azul plano */
+  --gradient-brand: #0075de;
+  --gradient-accent: #ffb110;
+  --gradient-royal: #02093a;
+  --shadow-soft: none;
+  --shadow-card: none;
+  --shadow-float: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dark {
+  --background: #191918;
+  --foreground: rgba(255, 255, 255, 0.92);
+  --card: #232322;
+  --card-foreground: rgba(255, 255, 255, 0.92);
+  --popover: #232322;
+  --popover-foreground: rgba(255, 255, 255, 0.92);
+  --primary: #3b9cf0;
+  --primary-foreground: #00172e;
+  --secondary: #2b2b2a;
+  --secondary-foreground: rgba(255, 255, 255, 0.85);
+  --muted: #2b2b2a;
+  --muted-foreground: #a8a39e;
+  --accent: #14304a;
+  --accent-foreground: #7cc0fb;
+  --destructive: #f2705e;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.16);
+  --ring: #3b9cf0;
+  --sidebar: #1e1e1d;
+  --sidebar-foreground: rgba(255, 255, 255, 0.9);
+  --sidebar-accent: #2b2b2a;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-accent-foreground: rgba(255, 255, 255, 0.95);
+
+  /* Acentos usados como TEXTO: más claros para mantener contraste AA sobre fondo oscuro */
+  --mint-deep: #7cc0fb;
+  --amber-ocre: #f2b84b;
+  --grape: #ff7a66;
+  --grape-deep: #ff9f90;
+  --royal: #6db6fb;
+  --sky-tint: #14304a;
+  --peach: #4a3322;
+  --shadow-float: 0 4px 16px rgba(0, 0, 0, 0.6);
+}
+
+/* En modo oscuro, los rellenos sólidos de acento siguen siendo claros: su texto debe ser oscuro */
+.dark :is(.bg-mint, .bg-sun, .bg-royal, .bg-grape, .bg-amber-ocre) {
+  --foreground: #000;
+  color: #000;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "lnum", "cv11";
+    -webkit-font-smoothing: antialiased;
+    padding-top: env(safe-area-inset-top);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+  h1 { letter-spacing: -0.035em; }
+
+  p { text-wrap: pretty; }
+
+  button, a, label, th, .font-ui {
+    font-family: var(--font-ui);
+  }
+  button { cursor: pointer; transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease; }
+  button:disabled { cursor: not-allowed; }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection { background: #cfe6fb; color: #000; }
+
+  /* Evita que palabras largas (o texto ampliado al 200 %) rompan el diseño */
+  body { overflow-wrap: break-word; }
+  img, svg, video { max-width: 100%; }
+}
+
+@layer utilities {
+  .font-display { font-family: var(--font-display); }
+  .font-body { font-family: var(--font-sans); }
+  /* Voz editorial (subtítulos de sección): serif a 18px, como "Lyon Text" en la referencia */
+  .font-serif { font-family: var(--font-serif); }
+  .lead-serif {
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    line-height: 1.56;
+    color: var(--muted-foreground);
+  }
+
+  .text-gradient-brand { color: var(--primary); }
+
+  /*
+   * Píldora de resalte del héroe: envuelve UNA palabra del titular con un fondo melocotón.
+   * (Reemplaza al antiguo texto con degradado animado.)
+   */
+  .text-gradient-animated {
+    display: inline-block;
+    background: #f6d5b8;
+    color: #000;
+    border-radius: 9999px;
+    padding: 0.02em 0.3em 0.08em;
+    margin-inline: 0.04em;
+    line-height: 1.08;
+    animation: ta-pill-in 0.8s var(--ease-spring) 0.25s both;
+  }
+  .pill-sun { background: var(--sun); color: #000; }
+  .pill-coral { background: var(--grape); color: #fff; }
+  .pill-sky { background: var(--sky-tint); color: var(--primary); }
+
+  .text-underline-brush {
+    background-image: linear-gradient(var(--sun), var(--sun));
+    background-repeat: no-repeat;
+    background-position: 0 90%;
+    background-size: 100% 0.28em;
+  }
+
+  .tabular { font-variant-numeric: tabular-nums; }
+}
+
+@utility bg-brand-gradient { background: var(--primary); }
+@utility bg-accent-gradient { background: var(--sun); }
+@utility bg-royal-gradient { background: var(--midnight); color: #fff; }
+
+@utility shadow-soft { box-shadow: none; }
+@utility shadow-card { box-shadow: none; }
+@utility shadow-float { box-shadow: var(--shadow-float); }
+
+/* Botón/tarjeta interactiva: borde de 1px, el fondo reacciona a 200ms y se "asienta" al pulsar */
+@utility chunky {
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
+  &:hover { border-color: color-mix(in srgb, var(--foreground) 28%, transparent); }
+  &:active { transform: scale(0.98); }
+}
+
+/* Tarjeta que se eleva sin sombra: sube 2px y oscurece el borde */
+@utility chunky-lift {
+  transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+  &:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--foreground) 26%, transparent); }
+}
+
+/* Superficies: lienzo plano (sin radiales ni puntos) */
+@utility hero-surface { background: var(--background); }
+@utility dotted-surface { background-image: none; }
+
+/* Tarjetas de acento: un color plano por bloque, como notas adhesivas */
+@utility card-marigold { background: #ffb110; color: #000; --foreground: #000; --muted-foreground: #000; border-color: transparent; }
+@utility card-coral { background: #f64932; color: #fff; --foreground: #fff; --muted-foreground: #fff; border-color: transparent; }
+@utility card-sky { background: #62aef0; color: #000; --foreground: #000; --muted-foreground: #000; border-color: transparent; }
+@utility card-tint { background: #e6f3fe; color: #000; --foreground: #000; --muted-foreground: #000; border-color: transparent; }
+@utility card-peach { background: #f6d5b8; color: #000; --foreground: #000; --muted-foreground: #000; border-color: transparent; }
+@utility card-midnight { background: #02093a; color: #fff; --foreground: #fff; --muted-foreground: #fff; border-color: transparent; }
+
+@utility animate-float { animation: ta-float 4.5s ease-in-out infinite; }
+@utility animate-rise { animation: ta-rise 0.7s var(--ease-out) both; }
+@utility animate-pop { animation: ta-pop 0.3s var(--ease-out) both; }
+@utility animate-live-pulse { animation: ta-pulse 1.8s infinite; }
+@utility animate-spring { animation: ta-spring 0.7s var(--ease-spring) both; }
+@utility animate-draw { animation: ta-draw 1.2s var(--ease-out) 0.4s both; }
+
+/* ===== Revelación al hacer scroll ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.reveal[data-visible="true"] { opacity: 1; transform: none; will-change: auto; }
+.reveal-scale { transform: translateY(12px) scale(0.97); }
+.reveal-left { transform: translateX(-24px); }
+.reveal-right { transform: translateX(24px); }
+
+@keyframes ta-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(-3deg); }
+}
+@keyframes ta-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes ta-pop {
+  from { opacity: 0; transform: translateY(10px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes ta-spring {
+  0% { opacity: 0; transform: translateY(24px) scale(0.6) rotate(-8deg); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes ta-pill-in {
+  0% { opacity: 0; transform: scale(0.7) rotate(-3deg); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes ta-draw {
+  from { stroke-dashoffset: 120; opacity: 0; }
+  to { stroke-dashoffset: 0; opacity: 1; }
+}
+@keyframes ta-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(0, 117, 222, 0.35); }
+  70% { box-shadow: 0 0 0 12px rgba(0, 117, 222, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 117, 222, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}
+
+/* PWA instalada: respeta zonas seguras de iOS */
+@media (display-mode: standalone) {
+  body { overscroll-behavior-y: contain; }
+}
+
+
+/* ======================================================================
+ * Opciones de accesibilidad (botón flotante). Todo está desactivado por defecto.
+ * Las clases se aplican sobre <html> (ver src/lib/preferencias.ts).
+ * ====================================================================== */
+
+/* Enlace "Saltar al contenido" (solo visible al recibir foco con el teclado) */
+.saltar-contenido {
+  position: fixed;
+  left: 0.75rem;
+  top: 0.75rem;
+  z-index: 100;
+  transform: translateY(-200%);
+  border-radius: 8px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: transform 0.2s ease;
+}
+.saltar-contenido:focus { transform: none; }
+
+/* Indicador de foco más visible para quien navega con teclado */
+:focus-visible { outline-width: 3px; }
+.a11y-contraste :focus-visible { outline: 4px solid var(--ring); outline-offset: 3px; }
+
+/* Contraste alto */
+.a11y-contraste {
+  --background: #ffffff;
+  --foreground: #000000;
+  --card: #ffffff;
+  --card-foreground: #000000;
+  --popover: #ffffff;
+  --popover-foreground: #000000;
+  --primary: #004a99;
+  --primary-foreground: #ffffff;
+  --secondary: #ececec;
+  --secondary-foreground: #000000;
+  --muted: #ececec;
+  --muted-foreground: #1a1a1a;
+  --accent: #dcecff;
+  --accent-foreground: #002f63;
+  --destructive: #a10000;
+  --border: #000000;
+  --input: #000000;
+  --ring: #004a99;
+  --mint-deep: #003f80;
+  --amber-ocre: #5c3b00;
+  --grape-deep: #7a1608;
+  --grape: #8f1d0d;
+  --royal: #003f80;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #000000;
+  --sidebar-border: #000000;
+}
+.a11y-contraste.dark {
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: #000000;
+  --card-foreground: #ffffff;
+  --popover: #000000;
+  --popover-foreground: #ffffff;
+  --primary: #8cc8ff;
+  --primary-foreground: #000000;
+  --secondary: #1a1a1a;
+  --secondary-foreground: #ffffff;
+  --muted: #1a1a1a;
+  --muted-foreground: #f0f0f0;
+  --accent: #0b2a47;
+  --accent-foreground: #cfe8ff;
+  --destructive: #ff8a7a;
+  --border: #ffffff;
+  --input: #ffffff;
+  --ring: #ffd84d;
+  --mint-deep: #a9d8ff;
+  --amber-ocre: #ffd27a;
+  --grape-deep: #ffb4a8;
+  --grape: #ff9a8a;
+  --royal: #a9d8ff;
+  --sidebar: #000000;
+  --sidebar-foreground: #ffffff;
+  --sidebar-border: #ffffff;
+}
+.a11y-contraste body { font-weight: 500; }
+.a11y-contraste .lead-serif { color: var(--foreground); }
+.a11y-contraste :is(input, select, textarea) { border-width: 2px; }
+.a11y-contraste ::selection { background: #ffd84d; color: #000; }
+
+/* Fuente legible (sin serifas, formas abiertas y más separación; pensada para dislexia y baja visión) */
+.a11y-fuente,
+.a11y-fuente :is(body, h1, h2, h3, h4, button, a, label, input, select, textarea, .font-serif, .lead-serif, .font-display, .font-ui, .font-body) {
+  font-family: "Atkinson Hyperlegible", Verdana, "Trebuchet MS", Tahoma, Arial, sans-serif !important;
+  font-style: normal !important;
+  letter-spacing: 0.02em;
+}
+
+/* Espaciado de texto (WCAG 1.4.12) */
+.a11y-espaciado body,
+.a11y-espaciado :is(p, li, dd, dt, label, span, a, button, input, select, textarea, h1, h2, h3, h4) {
+  line-height: 1.7 !important;
+  letter-spacing: 0.12em !important;
+  word-spacing: 0.16em !important;
+}
+.a11y-espaciado p { margin-bottom: 0.5em; }
+
+/* Resaltar enlaces y controles */
+.a11y-enlaces a:not(.saltar-contenido) {
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2px;
+}
+.a11y-enlaces :is(a, button, summary, [role="button"], [role="switch"]):not(.saltar-contenido) {
+  outline: 2px dashed var(--ring);
+  outline-offset: 2px;
+}
+
+/* Pausar animaciones y movimiento */
+.a11y-sin-animaciones { scroll-behavior: auto !important; }
+.a11y-sin-animaciones *,
+.a11y-sin-animaciones *::before,
+.a11y-sin-animaciones *::after {
+  animation: none !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+.a11y-sin-animaciones .reveal { opacity: 1 !important; transform: none !important; }
+.a11y-sin-animaciones [class*="animate-"] { opacity: 1 !important; transform: none !important; }
+.a11y-sin-animaciones .text-gradient-animated { opacity: 1 !important; }
+
+/* Cursor grande */
+.a11y-cursor,
+.a11y-cursor * {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24'><path d='M3 2l7.5 19 2.7-7.8L21 10.5z' fill='black' stroke='white' stroke-width='1.6' stroke-linejoin='round'/></svg>") 4 2, auto !important;
+}
+.a11y-cursor :is(a, button, summary, select, [role="button"], [role="switch"], label) {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 24 24'><path d='M9 11V4.5a1.5 1.5 0 013 0V10l5.2.9A2.8 2.8 0 0119.5 14l-.7 5a3 3 0 01-3 2.6H11a3 3 0 01-2.4-1.2L4.5 14.6a1.6 1.6 0 012.4-2L9 14.2z' fill='white' stroke='black' stroke-width='1.6' stroke-linejoin='round'/></svg>") 14 4, pointer !important;
+}
